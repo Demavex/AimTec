@@ -20,6 +20,7 @@ namespace Garen_By_Demavex
     using Aimtec.SDK.Util.Cache;
     using Aimtec.SDK.Prediction.Skillshots;
     using Aimtec.SDK.Util;
+    using ZLib;
 
 
     using Spell = Aimtec.SDK.Spell;
@@ -88,6 +89,10 @@ namespace Garen_By_Demavex
                 DrawMenu.Add(new MenuBool("drawtoggle", "Draw Toggle"));
             }
             Menu.Add(DrawMenu);
+
+            var m = new Menu("zlibtest", "ZLibtest", true);
+            ZLib.Attach(m);
+            m.Attach();
 
 
 
@@ -201,7 +206,7 @@ namespace Garen_By_Demavex
 
             }
 
-
+        }
             private void Render_OnPresent()
             {
                 Vector2 maybeworks;
@@ -238,6 +243,7 @@ namespace Garen_By_Demavex
 
 
             }
+        
 
             public static List<Obj_AI_Minion> GetAllGenericMinionsTargets()
             {
@@ -287,14 +293,13 @@ namespace Garen_By_Demavex
                                 600, false, false,
                                 minion.ServerPosition)) >= hits)
                     {
-                        E.Cast
-                        }
-                    if (useQ && minion.IsValidTarget(150) && (minion.GetSpellDamage(SpellSlot.Q) > minion.Health))
+                        E.Cast();
+                    }
+                    if (useQ && minion.IsValidTarget(150) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health))
                     {
                         if (Q.Cast())
                         {
-                            Orbwalker.ForceTarget(minion)
-
+                        Orbwalker.ForceTarget(minion);
                         }
                     }
 
@@ -381,7 +386,7 @@ namespace Garen_By_Demavex
 
                 if (useQ && target.IsValidTarget(600) && target != null)
                 {
-                    Q.Cast;
+                    Q.Cast();
                 }
                 if (useE && target.IsValidTarget(E.Range) && target != null)
                 {
@@ -395,8 +400,7 @@ namespace Garen_By_Demavex
                     }
                 }
 
-                break;
-            }
+                
         }
 
 
@@ -419,7 +423,7 @@ namespace Garen_By_Demavex
                 {
                     if (target.IsValidTarget(500))
                     {
-                        Q.Cast;
+                        Q.Cast();
                     }
                 }
                 if (useE && target != null)

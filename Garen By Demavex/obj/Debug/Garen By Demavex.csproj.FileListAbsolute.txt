@@ -1,0 +1,2 @@
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.csprojResolveAssemblyReference.cache
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.csproj.CoreCompileInputs.cache
