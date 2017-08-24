@@ -113,7 +113,7 @@ namespace Garen_By_Demavex
             {
                 return;
             }
-            if (Menu["combo"]["qaa"].Enabled &&
+            if (Menu["combo"].Enabled &&
                 (Orbwalker.Mode.Equals(OrbwalkingMode.Combo) || Orbwalker.Mode.Equals(OrbwalkingMode.Mixed)))
             {
                 var target = GetBestEnemyHeroTarget();
@@ -397,7 +397,7 @@ namespace Garen_By_Demavex
                     E.Cast();
                 }
             }
-                if (target.IsValidTarget(R.Range) && target != null)
+                if (target.IsValidTarget(400) && target != null)
                 {
                     if (Player.GetSpellDamage(target, SpellSlot.R) >= target.Health)
                     {
