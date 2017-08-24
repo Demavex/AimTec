@@ -117,13 +117,6 @@ namespace Garen_By_Demavex
             ZLib.OnPredictDamage += ZLib_OnPredictDamage;
         }
 
-        private static void Game_OnStart()
-        {
-
-            
-
-        }
-
         private static void ZLib_OnPredictDamage(Unit unit, PredictDamageEventArgs args)
         {
             if (!unit.Instance.IsMe)
@@ -149,7 +142,7 @@ namespace Garen_By_Demavex
 
             var incomingDamagePercent = unit.IncomeDamage / unit.Instance.Health * 100;
 
-            if (unit.IncomeDamage > 0 || incomingDamagePercent >= 50)
+            if (unit.IncomeDamage >= unit.Instance.Health || incomingDamagePercent >= 10)
             {
                 W.Cast();
             }
@@ -399,7 +392,7 @@ namespace Garen_By_Demavex
 
         private void Killsteal()
         {
-            if (Q.Ready &&
+           /* if (Q.Ready &&
                 Menu["killsteal"]["ksq"].Enabled)
             {
                 var bestTarget = GetBestKillableHero(Q, DamageType.Physical, false);
@@ -426,7 +419,7 @@ namespace Garen_By_Demavex
                         E.Cast();
                     }
                 }
-            }
+            }*/
             if (R.Ready &&
                 Menu["killsteal"]["ksr"].Enabled)
             {
