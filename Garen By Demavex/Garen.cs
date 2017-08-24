@@ -319,7 +319,7 @@ namespace Garen_By_Demavex
                 bool useQ = Menu["farming"]["useq"].Enabled;
                 bool useE = Menu["farming"]["usee"].Enabled;
                 float hits = Menu["farming"]["hite"].As<MenuSlider>().Value;
-                Console.WriteLine("test")
+                Console.WriteLine("test");
                 if (E.Ready && useE && jungleTarget.IsValidTarget(Q.Range) && (GetGenericJungleMinionsTargetsInRange(E.Range).Count >= hits))
                 {
                     if (!Player.HasBuff("GarenE") && !Player.HasBuff("GarenQ"))
