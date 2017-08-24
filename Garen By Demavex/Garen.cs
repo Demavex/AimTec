@@ -149,8 +149,10 @@ namespace Garen_By_Demavex
             var incomingDamagePercent = unit.IncomeDamage / unit.Instance.MaxHealth * 100;
             float whp = Menu["wsettings"]["wdmg"].As<MenuSlider>().Value;
 
-            if ( unit.Instance.IsMe ) { 
+             
             if (unit.IncomeDamage >= unit.Instance.Health || incomingDamagePercent >= whp || unit.Events.Contains(EventType.CrowdControl) || unit.Events.Contains(EventType.Ultimate))
+                {
+                if (unit.Instance.IsMe)
                 {
                     W.Cast();
                 }
