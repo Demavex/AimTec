@@ -431,7 +431,7 @@ namespace Garen_By_Demavex
                     return;
                 }
 
-                if (Q.Ready && useQ && target.IsValidTarget(600) && target != null)
+                if (Q.Ready && useQ && target.IsValidTarget(800) && target != null)
                 {
                     if (Q.Cast())
                     {
