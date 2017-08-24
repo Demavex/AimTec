@@ -109,16 +109,18 @@ namespace Garen_By_Demavex
             //Orbwalker.PostAttack += OnPostAttack;
             LoadSpells();
             Console.WriteLine("Garen by Demavex - Loaded");
-        }
-
-        private static void Game_OnStart()
-        {
 
             var m = new Menu("zlibtest", "ZLibtest", true);
             ZLib.Attach(m);
             m.Attach();
 
             ZLib.OnPredictDamage += ZLib_OnPredictDamage;
+        }
+
+        private static void Game_OnStart()
+        {
+
+            
 
         }
 
