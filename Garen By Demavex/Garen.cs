@@ -21,11 +21,13 @@ namespace Garen_By_Demavex
     using Aimtec.SDK.Prediction.Skillshots;
     using Aimtec.SDK.Util;
     using ZLib;
-    
+
 
 
 
     using Spell = Aimtec.SDK.Spell;
+    using ZLib.Base;
+    using ZLib.Handlers;
 
     internal class Garen
     {
@@ -120,21 +122,32 @@ namespace Garen_By_Demavex
 
         }
 
-        private static void ZLib_OnPredictDamage(Garen hero, PredictDamageEventArgs args)
+        private static void ZLib_OnPredictDamage(Unit unit, PredictDamageEventArgs args)
         {
-            if (!hero.Player.IsMe)
+            if (unit.Instance.IsEnemy)
             {
                 return;
             }
-
-
-            if (args.HpInstance.PredictedDmg * 2 >= hero.Player.Health && W.Ready)
-
+ 
+        
+            if (unit.Instance.HasBuffOfType(BuffType.Invulnerability))
             {
-
+                args.NoProcess = true;
             }
 
 
+            var objShop = ObjectManager.Get<GameObject>()
+                .FirstOrDefault(x => x.Type == GameObjectType.obj_Shop && x.Team == unit.Instance.Team);
+
+            if (objShop != null
+                && objShop.Distance(unit.Instance.ServerPosition) <= 1250)
+            {
+                args.NoProcess = true;
+            }
+            if (unit.IncomeDamage > 0)
+            {
+                W.Cast();
+            }
         }
 
         private void Game_OnUpdate()
