@@ -129,8 +129,8 @@ namespace Garen_By_Demavex
             {
                 return;
             }
- 
-        
+
+
             if (unit.Instance.HasBuffOfType(BuffType.Invulnerability))
             {
                 args.NoProcess = true;
@@ -149,12 +149,15 @@ namespace Garen_By_Demavex
             var incomingDamagePercent = unit.IncomeDamage / unit.Instance.MaxHealth * 100;
             float whp = Menu["wsettings"]["wdmg"].As<MenuSlider>().Value;
 
+            if ( unit.Instance.IsMe ) { 
             if (unit.IncomeDamage >= unit.Instance.Health || incomingDamagePercent >= whp || unit.Events.Contains(EventType.CrowdControl) || unit.Events.Contains(EventType.Ultimate))
-            {
-                W.Cast();
-            }
+                {
+                    W.Cast();
+                }
 
+            }
         }
+        
 
         private void Game_OnUpdate()
         {
