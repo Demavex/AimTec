@@ -149,10 +149,11 @@ namespace Garen_By_Demavex
             var incomingDamagePercent = unit.IncomeDamage / unit.Instance.MaxHealth * 100;
             float whp = Menu["wsettings"]["wdmg"].As<MenuSlider>().Value;
 
-            if (unit.IncomeDamage >= unit.Instance.Health || incomingDamagePercent >= whp)
+            if (unit.IncomeDamage >= unit.Instance.Health || incomingDamagePercent >= whp || unit.Events.Contains(EventType.CrowdControl) || unit.Events.Contains(EventType.Ultimate))
             {
                 W.Cast();
             }
+
         }
 
         private void Game_OnUpdate()
@@ -323,7 +324,15 @@ namespace Garen_By_Demavex
             return TargetSelector.Implementation.GetOrderedTargets(spell.Range).FirstOrDefault(t => t.IsValidTarget());
         }
 
-  
+        private static float RDamage(Obj_AI_Base target)
+        {
+            if (target.HasBuff("garenpassiveenemytarget"))
+            {
+                return (float)Player.CalculateDamage(target, DamageType.True, Damage.GetSpellDamage(Player, target, SpellSlot.R));
+            }
+
+            return (float)Player.CalculateDamage(target, DamageType.Magical, Damage.GetSpellDamage(Player, target, SpellSlot.R));
+        }
 
         private void Killsteal()
         {
@@ -360,7 +369,7 @@ namespace Garen_By_Demavex
             {
                 var bestTarget = GetBestKillableHero(R, DamageType.Magical, false);
                 if (bestTarget != null &&
-                    Player.GetSpellDamage(bestTarget, SpellSlot.R) >= bestTarget.Health &&
+                    RDamage(bestTarget) >= bestTarget.Health &&
                     bestTarget.IsValidTarget(R.Range))
                 {
                     R.CastOnUnit(bestTarget);
