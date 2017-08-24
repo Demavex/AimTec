@@ -326,7 +326,7 @@ namespace Garen_By_Demavex
                         if ( Player.GetAutoAttackDamage(minion) <= minion.Health || Orbwalker.IsWindingUp )
                         if (Q.Cast())
                         {
-                            Player.IssueOrder(OrderType.AttackUnit, minion);
+                                Orbwalker.ForceTarget(minion);
                         }
                     }
                      
@@ -372,7 +372,7 @@ namespace Garen_By_Demavex
                     {
                         if (Q.Cast())
                         {
-                            Player.IssueOrder(OrderType.AttackUnit, jungleTarget);
+                            Orbwalker.ForceTarget(jungleTarget);
                         }
                     }
                 }
@@ -392,7 +392,7 @@ namespace Garen_By_Demavex
 
         private void Killsteal()
         {
-           /* if (Q.Ready &&
+            if (Q.Ready &&
                 Menu["killsteal"]["ksq"].Enabled)
             {
                 var bestTarget = GetBestKillableHero(Q, DamageType.Physical, false);
@@ -402,7 +402,7 @@ namespace Garen_By_Demavex
                 {
                     if (Q.Cast())
                     {
-                        Player.IssueOrder(OrderType.AttackUnit, bestTarget);
+                        Orbwalker.ForceTarget(bestTarget);
                     }
                 }
             }
@@ -419,7 +419,7 @@ namespace Garen_By_Demavex
                         E.Cast();
                     }
                 }
-            }*/
+            }
             if (R.Ready &&
                 Menu["killsteal"]["ksr"].Enabled)
             {
