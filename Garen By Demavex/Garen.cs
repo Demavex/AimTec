@@ -274,9 +274,7 @@ namespace Garen_By_Demavex
                 foreach (var minion in GetEnemyLaneMinionsTargetsInRange(E.Range))
                 {
 
-                    if (E.Ready && useE && minion.IsValidTarget(E.Range) && GameObjects.EnemyMinions.Count(h => h.IsValidTarget(
-                                325, false, false,
-                                minion.ServerPosition)) >= hits)
+                    if (E.Ready && useE && minion.IsValidTarget(E.Range) && (GetEnemyLaneMinionsTargetsInRange(E.Range).Count >= hits))
                     {
                     if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
                     { 
@@ -285,9 +283,12 @@ namespace Garen_By_Demavex
                 }
                     if (Q.Ready && useQ && minion.IsValidTarget(200) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
-                    if (Player.HasBuff("Decisive Strike") == false)
+                    if (Player.HasBuff("Judgment") == false)
                     {
-                        Q.Cast();
+                        if (Q.Cast())
+                        {
+                            Player.IssueOrder(OrderType.AttackUnit, minion);
+                        }
                     }
                      
                     }
@@ -319,20 +320,21 @@ namespace Garen_By_Demavex
                     bool useE = Menu["farming"]["usee"].Enabled;
                     float hits = Menu["farming"]["hitq"].As<MenuSlider>().Value;
 
-                if (useQ && jungleTarget.IsValidTarget(Q.Range) && GameObjects.Jungle.Count(
-                        h => h.IsValidTarget(300, false, false,
-                            jungleTarget.ServerPosition)) >= hits)
+                if (E.Ready && useE && jungleTarget.IsValidTarget(Q.Range) && (GetGenericJungleMinionsTargetsInRange(E.Range).Count >= hits))
                 {
-                    if (Q.Cast())
-                    {
-                       // Orbwalker.ForceTarget(jungleTarget);
-                    }
-                    }
-                    if (E.Ready && useE && jungleTarget.IsValidTarget(E.Range))
-                    {
                     if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
                     {
                         E.Cast();
+                    }
+                    }
+                    if (Q.Ready && useQ && jungleTarget.IsValidTarget(100))
+                    {
+                    if (Player.HasBuff("Judgment") == false)
+                    {
+                        if (Q.Cast())
+                        {
+                            Player.IssueOrder(OrderType.AttackUnit, jungleTarget);
+                        }
                     }
                 }
 
