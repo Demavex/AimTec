@@ -137,6 +137,7 @@ namespace Garen_By_Demavex
             }
 
             Killsteal();
+            Killable();
 
         }
 
@@ -207,6 +208,8 @@ namespace Garen_By_Demavex
                 {
                     Render.Circle(Player.Position, R.Range, 40, Color.Crimson);
                 }
+
+                
 
                /* if (Menu["drawings"]["drawtoggle"].Enabled)
                 {
@@ -350,6 +353,7 @@ namespace Garen_By_Demavex
             return TargetSelector.Implementation.GetOrderedTargets(spell.Range).FirstOrDefault(t => t.IsValidTarget());
         }
 
+  
 
         private void Killsteal()
         {
@@ -384,7 +388,7 @@ namespace Garen_By_Demavex
             if (R.Ready &&
                 Menu["killsteal"]["ksr"].Enabled)
             {
-                var bestTarget = GetBestKillableHero(R, DamageType.Physical, false);
+                var bestTarget = GetBestKillableHero(R, DamageType.Magical, false);
                 if (bestTarget != null &&
                     Player.GetSpellDamage(bestTarget, SpellSlot.R) >= bestTarget.Health &&
                     bestTarget.IsValidTarget(R.Range))
