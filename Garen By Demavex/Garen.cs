@@ -278,7 +278,7 @@ namespace Garen_By_Demavex
                                 325, false, false,
                                 minion.ServerPosition)) >= hits)
                     {
-                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("Decisive Strike"))
+                    if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
                     { 
                         E.Cast();
                     }
@@ -437,8 +437,8 @@ namespace Garen_By_Demavex
             }
                 if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
                 {
-                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("Decisive Strike"))
-                    {
+                if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
+                {
                         E.Cast();
                     }
             }
@@ -469,7 +469,7 @@ namespace Garen_By_Demavex
             }
             if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
             {
-                if (Player.HasBuff("Judgment") == false || Player.HasBuff("Decisive Strike"))
+                if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
                 {
                     E.Cast();
                 }
