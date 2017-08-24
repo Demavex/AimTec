@@ -344,8 +344,7 @@ namespace Garen_By_Demavex
                     Player.GetSpellDamage(bestTarget, SpellSlot.Q) >= bestTarget.Health &&
                     bestTarget.IsValidTarget(Q.Range))
                 {
-                    Q.Cast();
-                    
+                    Q.Cast();                    
                 }
             }
             if (E.Ready &&
@@ -415,10 +414,8 @@ namespace Garen_By_Demavex
 
                 if (Q.Ready && useQ && target.IsValidTarget(800) && target != null)
                 {
-                    if (Q.Cast())
-                    {
-                    Orbwalker.ForceTarget(target);
-                    }   
+                Q.Cast();
+                    
             }
                 if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
                 {
