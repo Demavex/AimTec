@@ -308,27 +308,27 @@ namespace Garen_By_Demavex
                     .ToList();
             }
 
-            private void Jungle()
+        private void Jungle()
+        {
+            foreach (var jungleTarget in GameObjects.Jungle.Where(m => m.IsValidTarget(E.Range)).ToList())
             {
-                foreach (var jungleTarget in GameObjects.Jungle.Where(m => m.IsValidTarget(E.Range)).ToList())
+                if (!jungleTarget.IsValidTarget() || !jungleTarget.IsValidSpellTarget())
                 {
-                    if (!jungleTarget.IsValidTarget() || !jungleTarget.IsValidSpellTarget())
-                    {
-                        return;
-                    }
-                    bool useQ = Menu["farming"]["useq"].Enabled;
-                    bool useE = Menu["farming"]["usee"].Enabled;
-                    float hits = Menu["farming"]["hite"].As<MenuSlider>().Value;
-
-                if (E.Ready && useE && jungleTarget.IsValidTarget(E.Range) && (GetGenericJungleMinionsTargetsInRange(E.Range).Count >= hits))
+                    return;
+                }
+                bool useQ = Menu["farming"]["useq"].Enabled;
+                bool useE = Menu["farming"]["usee"].Enabled;
+                float hits = Menu["farming"]["hite"].As<MenuSlider>().Value;
+                Console.WriteLine("test")
+                if (E.Ready && useE && jungleTarget.IsValidTarget(Q.Range) && (GetGenericJungleMinionsTargetsInRange(E.Range).Count >= hits))
                 {
                     if (!Player.HasBuff("GarenE") && !Player.HasBuff("GarenQ"))
                     {
                         E.Cast();
                     }
                 }
-                    if (Q.Ready && useQ && jungleTarget.IsValidTarget(100))
-                    {
+                if (Q.Ready && useQ && jungleTarget.IsValidTarget(100))
+                {
                     if (!Player.HasBuff("GarenE"))
                     {
                         if (Q.Cast())
@@ -338,8 +338,8 @@ namespace Garen_By_Demavex
                     }
                 }
 
-
-                }
+            }
+    
             }
 
 
