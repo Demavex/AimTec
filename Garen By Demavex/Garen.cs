@@ -374,7 +374,7 @@ namespace Garen_By_Demavex
 
                 bool useQ = Menu["combo"]["useq"].Enabled;
                 bool useE = Menu["combo"]["usee"].Enabled;
-                bool useW = Menu["combo"]["usew"].Enabled;
+               
                 var target = GetBestEnemyHeroTargetInRange(1200);
 
 
@@ -385,14 +385,14 @@ namespace Garen_By_Demavex
 
                 if (useQ && target.IsValidTarget(600) && target != null)
                 {
-                if (Q.Cast())
-                {
+                    if (Q.Cast())
+                    {
                     Orbwalker.ForceTarget(target);
-                }
+                    }
             }
                 if (useE && target.IsValidTarget(E.Range) && target != null)
                 {
-                if (!Player.HasBuff("Judgement"))
+                if (!Player.HasBuff("Judgment"))
                 {
                     E.Cast();
                 }
