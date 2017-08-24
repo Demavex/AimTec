@@ -97,9 +97,9 @@ namespace Garen_By_Demavex
             }
             Menu.Add(DrawMenu);
 
-            var m = new Menu("zlibtest", "ZLibtest", true);
+            /*var m = new Menu("zlibtest", "ZLibtest", true);
             ZLib.Attach(m);
-            m.Attach();
+            m.Attach();*/
 
 
 
@@ -285,10 +285,11 @@ namespace Garen_By_Demavex
                 }
                     if (Q.Ready && useQ && minion.IsValidTarget(200) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
-                        if (Q.Cast())
-                        {
-                       // Orbwalker.ForceTarget(minion);
-                        }
+                    if (Player.HasBuff("Decisive Strike") == false)
+                    {
+                        Q.Cast();
+                    }
+                     
                     }
 
                 }
@@ -324,7 +325,7 @@ namespace Garen_By_Demavex
                 {
                     if (Q.Cast())
                     {
-                        Orbwalker.ForceTarget(jungleTarget);
+                       // Orbwalker.ForceTarget(jungleTarget);
                     }
                     }
                     if (E.Ready && useE && jungleTarget.IsValidTarget(E.Range))
@@ -439,8 +440,8 @@ namespace Garen_By_Demavex
                 {
                 if ((Player.HasBuff("Judgment") == false) && (Player.HasBuff("Decisive Strike") == false))
                 {
-                        E.Cast();
-                    }
+                    E.Cast();
+                }
             }
             
                                 
