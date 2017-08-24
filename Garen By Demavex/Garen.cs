@@ -278,16 +278,16 @@ namespace Garen_By_Demavex
                                 325, false, false,
                                 minion.ServerPosition)) >= hits)
                     {
-                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("DecisiveStrike"))
+                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("Decisive Strike"))
                     { 
                         E.Cast();
                     }
                 }
-                    if (Q.Ready && useQ && minion.IsValidTarget(150) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
+                    if (Q.Ready && useQ && minion.IsValidTarget(200) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
                         if (Q.Cast())
                         {
-                        Orbwalker.ForceTarget(minion);
+                       // Orbwalker.ForceTarget(minion);
                         }
                     }
 
@@ -437,7 +437,7 @@ namespace Garen_By_Demavex
             }
                 if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
                 {
-                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("DecisiveStrike"))
+                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("Decisive Strike"))
                     {
                         E.Cast();
                     }
@@ -469,7 +469,7 @@ namespace Garen_By_Demavex
             }
             if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
             {
-                if (Player.HasBuff("Judgment") == false || Player.HasBuff("DecisiveStrike"))
+                if (Player.HasBuff("Judgment") == false || Player.HasBuff("Decisive Strike"))
                 {
                     E.Cast();
                 }
