@@ -21,6 +21,8 @@ namespace Garen_By_Demavex
     using Aimtec.SDK.Prediction.Skillshots;
     using Aimtec.SDK.Util;
     using ZLib;
+    
+
 
 
     using Spell = Aimtec.SDK.Spell;
@@ -97,12 +99,7 @@ namespace Garen_By_Demavex
             }
             Menu.Add(DrawMenu);
 
-            /*var m = new Menu("zlibtest", "ZLibtest", true);
-            ZLib.Attach(m);
-            m.Attach();*/
-
-
-
+           
             Menu.Attach();
 
             Render.OnPresent += Render_OnPresent;
@@ -112,6 +109,33 @@ namespace Garen_By_Demavex
             Console.WriteLine("Garen by Demavex - Loaded");
         }
 
+        private static void Game_OnStart()
+        {
+
+            var m = new Menu("zlibtest", "ZLibtest", true);
+            ZLib.Attach(m);
+            m.Attach();
+
+            ZLib.OnPredictDamage += ZLib_OnPredictDamage;
+
+        }
+
+        private static void ZLib_OnPredictDamage(Garen hero, PredictDamageEventArgs args)
+        {
+            if (!hero.Player.IsMe)
+            {
+                return;
+            }
+
+
+            if (args.HpInstance.PredictedDmg * 2 >= hero.Player.Health && W.Ready)
+
+            {
+
+            }
+
+
+        }
 
         private void Game_OnUpdate()
         {
@@ -454,7 +478,7 @@ namespace Garen_By_Demavex
                                 
         }
 
-
+        
 
         private void OnHarass()
         {
@@ -484,5 +508,10 @@ namespace Garen_By_Demavex
             }
 
         }
-        }
+
+
     }
+
+
+    }
+
