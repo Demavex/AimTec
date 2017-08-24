@@ -323,7 +323,7 @@ namespace Garen_By_Demavex
                     {
                     if (!Player.HasBuff("GarenE"))
                     {
-                        if ( Player.GetAutoAttackDamage(minion) <= minion.Health || !Orbwalker.CanAttack())
+                        if ( Player.GetAutoAttackDamage(minion) <= minion.Health)
                         { 
                         if (Q.Cast())
                         {
