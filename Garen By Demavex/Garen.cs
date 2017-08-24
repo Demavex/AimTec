@@ -327,7 +327,7 @@ namespace Garen_By_Demavex
                         
                             if (Q.Cast())
                         {
-                                Orbwalker.ForceTarget(minion);
+                                //Orbwalker.ForceTarget(minion);
                         }
                     
                     }
