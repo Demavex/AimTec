@@ -390,13 +390,11 @@ namespace Garen_By_Demavex
                     Orbwalker.ForceTarget(target);
                     }
             }
-                if (useE && target.IsValidTarget(E.Range) && target != null)
-                {
-                if (!Player.HasBuff("Judgment"))
+                if (useE && target.IsValidTarget(325) && target != null)
                 {
                     E.Cast();
                 }
-            }
+            
                 if (target.IsValidTarget(400) && target != null)
                 {
                     if (Player.GetSpellDamage(target, SpellSlot.R) >= target.Health)
