@@ -276,14 +276,14 @@ namespace Garen_By_Demavex
 
                     if (E.Ready && useE && minion.IsValidTarget(E.Range) && (GetEnemyLaneMinionsTargetsInRange(E.Range).Count >= hits))
                     {
-                    if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
-                    { 
+                    if(!Player.HasBuff("GarenE") && !Player.HasBuff("GarenQ"))
+                    {
                         E.Cast();
                     }
                 }
                     if (Q.Ready && useQ && minion.IsValidTarget(200) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
-                    if (Player.HasBuff("Judgment") == false)
+                    if (!Player.HasBuff("GarenE"))
                     {
                         if (Q.Cast())
                         {
@@ -310,7 +310,7 @@ namespace Garen_By_Demavex
 
             private void Jungle()
             {
-                foreach (var jungleTarget in GameObjects.Jungle.Where(m => m.IsValidTarget(Q.Range)).ToList())
+                foreach (var jungleTarget in GameObjects.Jungle.Where(m => m.IsValidTarget(E.Range)).ToList())
                 {
                     if (!jungleTarget.IsValidTarget() || !jungleTarget.IsValidSpellTarget())
                     {
@@ -318,18 +318,18 @@ namespace Garen_By_Demavex
                     }
                     bool useQ = Menu["farming"]["useq"].Enabled;
                     bool useE = Menu["farming"]["usee"].Enabled;
-                    float hits = Menu["farming"]["hitq"].As<MenuSlider>().Value;
+                    float hits = Menu["farming"]["hite"].As<MenuSlider>().Value;
 
-                if (E.Ready && useE && jungleTarget.IsValidTarget(Q.Range) && (GetGenericJungleMinionsTargetsInRange(E.Range).Count >= hits))
+                if (E.Ready && useE && jungleTarget.IsValidTarget(E.Range) && (GetGenericJungleMinionsTargetsInRange(E.Range).Count >= hits))
                 {
-                    if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
+                    if (!Player.HasBuff("GarenE") && !Player.HasBuff("GarenQ"))
                     {
                         E.Cast();
                     }
-                    }
+                }
                     if (Q.Ready && useQ && jungleTarget.IsValidTarget(100))
                     {
-                    if (Player.HasBuff("Judgment") == false)
+                    if (!Player.HasBuff("GarenE"))
                     {
                         if (Q.Cast())
                         {
@@ -362,7 +362,7 @@ namespace Garen_By_Demavex
                 {
                     if (Q.Cast())
                     {
-                        Orbwalker.ForceTarget(bestTarget);
+                        Player.IssueOrder(OrderType.AttackUnit, bestTarget);
                     }
                 }
             }
@@ -373,8 +373,8 @@ namespace Garen_By_Demavex
                 if (bestTarget != null &&
                     Player.GetSpellDamage(bestTarget, SpellSlot.E) >= bestTarget.Health &&
                     bestTarget.IsValidTarget(E.Range))
-                {
-                    if (Player.HasBuff("Judgment") == false)
+                {   
+                    if (!Player.HasBuff("GarenE"))
                     {
                         E.Cast();
                     }
@@ -440,7 +440,7 @@ namespace Garen_By_Demavex
             }
                 if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
                 {
-                if ((Player.HasBuff("Judgment") == false) && (Player.HasBuff("Decisive Strike") == false))
+                if (!Player.HasBuff("GarenE") && !Player.HasBuff("GarenQ"))
                 {
                     E.Cast();
                 }
@@ -472,7 +472,7 @@ namespace Garen_By_Demavex
             }
             if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
             {
-                if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
+                if (!Player.HasBuff("GarenE") && !Player.HasBuff("GarenQ"))
                 {
                     E.Cast();
                 }

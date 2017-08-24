@@ -8,3 +8,9 @@ C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\Aimtec.S
 C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\ZLib.dll
 C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.exe
 C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.pdb
+C:\Users\mohamed.ali\Documents\AimTec-master\Garen By Demavex\bin\Debug\Garen By Demavex.exe.config
+C:\Users\mohamed.ali\Documents\AimTec-master\Garen By Demavex\obj\Debug\Garen By Demavex.exe
+C:\Users\mohamed.ali\Documents\AimTec-master\Garen By Demavex\obj\Debug\Garen By Demavex.pdb
+C:\Users\mohamed.ali\Documents\AimTec-master\Garen By Demavex\bin\Debug\Garen By Demavex.exe
+C:\Users\mohamed.ali\Documents\AimTec-master\Garen By Demavex\bin\Debug\Garen By Demavex.pdb
+C:\Users\mohamed.ali\Documents\AimTec-master\Garen By Demavex\obj\Debug\Garen By Demavex.csprojResolveAssemblyReference.cache
