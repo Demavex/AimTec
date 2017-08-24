@@ -434,13 +434,12 @@ namespace Garen_By_Demavex
                     if (target.IsValidTarget(E.Range))
                     {
                     if (!Player.HasBuff("Judgement"))
-                    {
+                        {
                         E.Cast();
-                    }
+                        }
                     }
                 }
 
             }
         }
     }
-}
