@@ -1,2 +1,10 @@
 C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.csprojResolveAssemblyReference.cache
 C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.csproj.CoreCompileInputs.cache
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\Garen By Demavex.exe.config
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\Garen By Demavex.exe
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\Garen By Demavex.pdb
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\Aimtec.dll
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\Aimtec.SDK.dll
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\bin\Debug\ZLib.dll
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.exe
+C:\Users\moham\source\repos\Garen By Demavex\Garen By Demavex\obj\Debug\Garen By Demavex.pdb

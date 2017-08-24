@@ -100,7 +100,7 @@ namespace Garen_By_Demavex
 
             Render.OnPresent += Render_OnPresent;
             Game.OnUpdate += Game_OnUpdate;
-            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
+            //Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
             Orbwalker.PostAttack += OnPostAttack;
             LoadSpells();
             Console.WriteLine("Garen by Demavex - Loaded");
@@ -295,7 +295,7 @@ namespace Garen_By_Demavex
                     {
                         E.Cast();
                     }
-                    if (useQ && minion.IsValidTarget(150) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health))
+                    if (useQ && minion.IsValidTarget(150) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
                         if (Q.Cast())
                         {
