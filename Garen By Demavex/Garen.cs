@@ -62,17 +62,14 @@ namespace Garen_By_Demavex
             var ComboMenu = new Menu("combo", "Combo");
             {
                 ComboMenu.Add(new MenuBool("useq", "Use Q in Combo"));
-             //   ComboMenu.Add(new MenuBool("qaa", "Use Q AA Reset"));
-             //   ComboMenu.Add(new MenuKeyBind("QAA", "Q AA Toggle", KeyCode.T, KeybindType.Toggle));
                 ComboMenu.Add(new MenuBool("usee", "Use E in Combo"));
-                ComboMenu.Add(new MenuBool("items", "Use Items"));
+               // ComboMenu.Add(new MenuBool("items", "Use Items"));
             }
             Menu.Add(ComboMenu);
             var HarassMenu = new Menu("harass", "Harass");
             {
 
                 HarassMenu.Add(new MenuBool("useq", "Use Q in Harass"));
-             //   HarassMenu.Add(new MenuBool("qaa", "Use Q AA Reset"));
                 HarassMenu.Add(new MenuBool("usee", "Use E in Harass"));
             }
             Menu.Add(HarassMenu);
@@ -93,6 +90,14 @@ namespace Garen_By_Demavex
             }
             Menu.Add(KSMenu);
 
+            var WMenu = new Menu("wsettings", "W Settings");
+            {
+                WMenu.Add(new MenuBool("usew", "Enable W usage"));
+                WMenu.Add(new MenuSlider("wdmg", "^- If Incoming Damage is X% of Max Health", 10, 0, 90));
+ 
+            }
+            Menu.Add(WMenu);
+
             var DrawMenu = new Menu("drawings", "Drawings");
             {
                 DrawMenu.Add(new MenuBool("drawe", "Draw E Range"));
@@ -106,7 +111,6 @@ namespace Garen_By_Demavex
 
             Render.OnPresent += Render_OnPresent;
             Game.OnUpdate += Game_OnUpdate;
-            //Orbwalker.PostAttack += OnPostAttack;
             LoadSpells();
             Console.WriteLine("Garen by Demavex - Loaded");
 
@@ -119,7 +123,9 @@ namespace Garen_By_Demavex
 
         private static void ZLib_OnPredictDamage(Unit unit, PredictDamageEventArgs args)
         {
-            if (!unit.Instance.IsMe)
+            bool useW = Menu["wsettings"]["usew"].Enabled;
+
+            if (!unit.Instance.IsMe || !useW)
             {
                 return;
             }
@@ -140,9 +146,10 @@ namespace Garen_By_Demavex
                 args.NoProcess = true;
             }
 
-            var incomingDamagePercent = unit.IncomeDamage / unit.Instance.Health * 100;
+            var incomingDamagePercent = unit.IncomeDamage / unit.Instance.MaxHealth * 100;
+            float whp = Menu["wsettings"]["wdmg"].As<MenuSlider>().Value;
 
-            if (unit.IncomeDamage >= unit.Instance.Health || incomingDamagePercent >= 10)
+            if (unit.IncomeDamage >= unit.Instance.Health || incomingDamagePercent >= whp)
             {
                 W.Cast();
             }
@@ -175,59 +182,7 @@ namespace Garen_By_Demavex
             
 
         }
-
-        /*public void OnPostAttack(object sender, PostAttackEventArgs args)
-        {
-            var heroTarget = args.Target as Obj_AI_Hero;
-            if (Orbwalker.Mode.Equals(OrbwalkingMode.Combo))
-            {
-                if (!Menu["combo"]["QAA"].Enabled)
-                {
-                    return;
-                }
-                if (!Menu["combo"]["qaa"].Enabled)
-                {
-                    return;
-                }
-                Obj_AI_Hero hero = args.Target as Obj_AI_Hero;
-                if (hero == null || !hero.IsValid || !hero.IsEnemy)
-                {
-                    return;
-                }
-                if (Q.Cast())
-                {
-                    Orbwalker.ResetAutoAttackTimer();
-                }
-
-
-            }
-
-
-            if (Orbwalker.Mode.Equals(OrbwalkingMode.Mixed))
-            {
-                if (!Menu["combo"]["QAA"].Enabled)
-                {
-                    return;
-                }
-                if (!Menu["harass"]["qaa"].Enabled)
-                {
-                    return;
-                }
-                Obj_AI_Hero hero = args.Target as Obj_AI_Hero;
-                if (hero == null || !hero.IsValid || !hero.IsEnemy)
-                {
-                    return;
-                }
-                if (Q.Cast())
-                {
-                    Orbwalker.ResetAutoAttackTimer();
-                }
-
-
-
-            }
-
-    }*/
+        
         private void Render_OnPresent()
             {
                 Vector2 maybeworks;
@@ -245,25 +200,6 @@ namespace Garen_By_Demavex
                 }
 
                 
-
-               /* if (Menu["drawings"]["drawtoggle"].Enabled)
-                {
-
-                    if (Menu["combo"]["QAA"].Enabled)
-                    {
-                        Render.Text(xaOffset - 50, yaOffset + 50, Color.LimeGreen, "Q AA : ON",
-                            RenderTextFlags.VerticalCenter);
-                    }
-                    if (!Menu["combo"]["QAA"].Enabled)
-                    {
-                        Render.Text(xaOffset - 50, yaOffset + 50, Color.Red, "Q AA : OFF",
-                            RenderTextFlags.VerticalCenter);
-
-
-
-                    }
-                }*/
-
 
             }
         
@@ -330,6 +266,8 @@ namespace Garen_By_Demavex
                         
                     }
 
+                    
+
                 }
 
                 }
@@ -370,11 +308,8 @@ namespace Garen_By_Demavex
                 {
                     if (!Player.HasBuff("GarenE"))
                     {
-                        if (Q.Cast())
-                        {
-                            Orbwalker.ForceTarget(jungleTarget);
-                        }
-                    }
+                        Q.Cast();
+                                            }
                 }
 
             }
