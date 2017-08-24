@@ -61,7 +61,6 @@ namespace Garen_By_Demavex
                 ComboMenu.Add(new MenuBool("qaa", "Use Q AA Reset"));
                 ComboMenu.Add(new MenuKeyBind("QAA", "Q AA Toggle", KeyCode.T, KeybindType.Toggle));
                 ComboMenu.Add(new MenuBool("usee", "Use E in Combo"));
-                ComboMenu.Add(new MenuBool("user", "Use R in Combo"));
                 ComboMenu.Add(new MenuBool("items", "Use Items"));
             }
             Menu.Add(ComboMenu);
@@ -386,12 +385,18 @@ namespace Garen_By_Demavex
 
                 if (useQ && target.IsValidTarget(600) && target != null)
                 {
-                    Q.Cast();
+                if (Q.Cast())
+                {
+                    Orbwalker.ForceTarget(target);
                 }
+            }
                 if (useE && target.IsValidTarget(E.Range) && target != null)
+                {
+                if (!Player.HasBuff("Judgement"))
                 {
                     E.Cast();
                 }
+            }
                 if (target.IsValidTarget(R.Range) && target != null)
                 {
                     if (Player.GetSpellDamage(target, SpellSlot.R) >= target.Health)
@@ -411,10 +416,8 @@ namespace Garen_By_Demavex
             bool useQ = Menu["harass"]["useq"].Enabled;
             bool useE = Menu["harass"]["usee"].Enabled;
             var target = GetBestEnemyHeroTargetInRange(Q.Range);
-            float manapercent = Menu["harass"]["mana"].As<MenuSlider>().Value;
-            if (manapercent < Player.ManaPercent())
-            {
-                if (!target.IsValidTarget())
+           
+            if (!target.IsValidTarget())
                 {
                     return;
                 }
@@ -430,7 +433,10 @@ namespace Garen_By_Demavex
                 {
                     if (target.IsValidTarget(E.Range))
                     {
+                    if (!Player.HasBuff("Judgement"))
+                    {
                         E.Cast();
+                    }
                     }
                 }
 
