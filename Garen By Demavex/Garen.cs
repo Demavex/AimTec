@@ -137,7 +137,7 @@ namespace Garen_By_Demavex
             }
 
             Killsteal();
-            Killable();
+            
 
         }
 
