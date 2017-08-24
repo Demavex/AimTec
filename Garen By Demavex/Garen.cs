@@ -274,16 +274,16 @@ namespace Garen_By_Demavex
                 foreach (var minion in GetEnemyLaneMinionsTargetsInRange(E.Range))
                 {
 
-                    if (useE && minion.IsValidTarget(E.Range) && GameObjects.EnemyMinions.Count(h => h.IsValidTarget(
+                    if (E.Ready && useE && minion.IsValidTarget(E.Range) && GameObjects.EnemyMinions.Count(h => h.IsValidTarget(
                                 325, false, false,
                                 minion.ServerPosition)) >= hits)
                     {
-                    if (Player.HasBuff("Judgment") == false)
+                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("DecisiveStrike"))
                     { 
                         E.Cast();
                     }
                 }
-                    if (useQ && minion.IsValidTarget(150) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
+                    if (Q.Ready && useQ && minion.IsValidTarget(150) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
                         if (Q.Cast())
                         {
@@ -428,16 +428,16 @@ namespace Garen_By_Demavex
                     return;
                 }
 
-                if (useQ && target.IsValidTarget(600) && target != null)
+                if (Q.Ready && useQ && target.IsValidTarget(600) && target != null)
                 {
                     if (Q.Cast())
                     {
                     Orbwalker.ForceTarget(target);
                     }   
             }
-                if (useE && target.IsValidTarget(E.Range) && target != null)
+                if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
                 {
-                    if (Player.HasBuff("Judgment") == false)
+                    if (Player.HasBuff("Judgment") == false || Player.HasBuff("DecisiveStrike"))
                     {
                         E.Cast();
                     }
@@ -460,27 +460,21 @@ namespace Garen_By_Demavex
                     return;
                 }
 
-                if (useQ && target != null)
+            if (Q.Ready && useQ && target.IsValidTarget(500) && target != null)
+            {
+                if (Q.Cast())
                 {
-                    if (target.IsValidTarget(500))
-                    {
-                    if (Q.Cast())
-                    {
-                        Orbwalker.ForceTarget(target);
-                    }
+                    Orbwalker.ForceTarget(target);
                 }
-                }
-                if (useE && target != null)
-                {
-                    if (target.IsValidTarget(E.Range))
-                    {
-                    if (Player.HasBuff("Judgment") == false)
-                    {
-                        E.Cast();
-                    }
-                }
-                }
-
             }
+            if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
+            {
+                if (Player.HasBuff("Judgment") == false || Player.HasBuff("DecisiveStrike"))
+                {
+                    E.Cast();
+                }
+            }
+
+        }
         }
     }
