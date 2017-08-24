@@ -447,7 +447,7 @@ namespace Garen_By_Demavex
 
             if (Q.Ready && useQ && target.IsValidTarget(500) && target != null)
             {
-                (Q.Cast();
+                Q.Cast();
                 
             }
             if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
