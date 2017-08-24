@@ -319,18 +319,20 @@ namespace Garen_By_Demavex
                         E.Cast();
                     }
                 }
-                    if (Q.Ready && useQ && minion.IsValidTarget(200) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
+                    if (Q.Ready && useQ && minion.IsValidTarget(250) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
                     if (!Player.HasBuff("GarenE"))
                     {
-                        if ( Player.GetAutoAttackDamage(minion) <= minion.Health || Orbwalker.IsWindingUp )
+                        if ( Player.GetAutoAttackDamage(minion) <= minion.Health || !Orbwalker.CanAttack())
+                        { 
                         if (Q.Cast())
                         {
                                 Orbwalker.ForceTarget(minion);
                         }
                     }
-                     
                     }
+
+                }
 
                 }
             }
