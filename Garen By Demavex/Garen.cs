@@ -58,8 +58,8 @@ namespace Garen_By_Demavex
             var ComboMenu = new Menu("combo", "Combo");
             {
                 ComboMenu.Add(new MenuBool("useq", "Use Q in Combo"));
-                ComboMenu.Add(new MenuBool("qaa", "Use Q AA Reset"));
-                ComboMenu.Add(new MenuKeyBind("QAA", "Q AA Toggle", KeyCode.T, KeybindType.Toggle));
+             //   ComboMenu.Add(new MenuBool("qaa", "Use Q AA Reset"));
+             //   ComboMenu.Add(new MenuKeyBind("QAA", "Q AA Toggle", KeyCode.T, KeybindType.Toggle));
                 ComboMenu.Add(new MenuBool("usee", "Use E in Combo"));
                 ComboMenu.Add(new MenuBool("items", "Use Items"));
             }
@@ -68,7 +68,7 @@ namespace Garen_By_Demavex
             {
 
                 HarassMenu.Add(new MenuBool("useq", "Use Q in Harass"));
-                HarassMenu.Add(new MenuBool("qaa", "Use Q AA Reset"));
+             //   HarassMenu.Add(new MenuBool("qaa", "Use Q AA Reset"));
                 HarassMenu.Add(new MenuBool("usee", "Use E in Harass"));
             }
             Menu.Add(HarassMenu);
@@ -80,6 +80,14 @@ namespace Garen_By_Demavex
                 FarmMenu.Add(new MenuSlider("hite", "^- If Hits X", 1, 1, 4));
             }
             Menu.Add(FarmMenu);
+
+            var KSMenu = new Menu("killsteal", "Killsteal");
+            {
+                KSMenu.Add(new MenuBool("ksq", "Killsteal with Q"));
+                KSMenu.Add(new MenuBool("kse", "Killsteal with E"));
+                KSMenu.Add(new MenuBool("ksr", "Killsteal with R"));
+            }
+            Menu.Add(KSMenu);
 
             var DrawMenu = new Menu("drawings", "Drawings");
             {
@@ -99,8 +107,7 @@ namespace Garen_By_Demavex
 
             Render.OnPresent += Render_OnPresent;
             Game.OnUpdate += Game_OnUpdate;
-            //Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-            Orbwalker.PostAttack += OnPostAttack;
+            //Orbwalker.PostAttack += OnPostAttack;
             LoadSpells();
             Console.WriteLine("Garen by Demavex - Loaded");
         }
@@ -113,29 +120,7 @@ namespace Garen_By_Demavex
             {
                 return;
             }
-            if (Menu["combo"].Enabled &&
-                (Orbwalker.Mode.Equals(OrbwalkingMode.Combo) || Orbwalker.Mode.Equals(OrbwalkingMode.Mixed)))
-            {
-                var target = GetBestEnemyHeroTarget();
-
-
-                if (!target.IsValidTarget())
-                {
-                    return;
-                }
-
-                if (target.Distance(Player) < 300)
-                {
-                    Player.IssueOrder(OrderType.AttackTo, target);
-                }
-                if (target.Distance(Player) > 300)
-                {
-                    Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
-                }
-
-
-            }
-
+            
             switch (Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
@@ -151,10 +136,11 @@ namespace Garen_By_Demavex
 
             }
 
+            Killsteal();
 
         }
 
-        public void OnPostAttack(object sender, PostAttackEventArgs args)
+        /*public void OnPostAttack(object sender, PostAttackEventArgs args)
         {
             var heroTarget = args.Target as Obj_AI_Hero;
             if (Orbwalker.Mode.Equals(OrbwalkingMode.Combo))
@@ -205,8 +191,8 @@ namespace Garen_By_Demavex
 
             }
 
-        }
-            private void Render_OnPresent()
+    }*/
+        private void Render_OnPresent()
             {
                 Vector2 maybeworks;
                 var heropos = Render.WorldToScreen(Player.Position, out maybeworks);
@@ -222,7 +208,7 @@ namespace Garen_By_Demavex
                     Render.Circle(Player.Position, R.Range, 40, Color.Crimson);
                 }
 
-                if (Menu["drawings"]["drawtoggle"].Enabled)
+               /* if (Menu["drawings"]["drawtoggle"].Enabled)
                 {
 
                     if (Menu["combo"]["QAA"].Enabled)
@@ -238,7 +224,7 @@ namespace Garen_By_Demavex
 
 
                     }
-                }
+                }*/
 
 
             }
@@ -289,11 +275,14 @@ namespace Garen_By_Demavex
                 {
 
                     if (useE && minion.IsValidTarget(E.Range) && GameObjects.EnemyMinions.Count(h => h.IsValidTarget(
-                                600, false, false,
+                                325, false, false,
                                 minion.ServerPosition)) >= hits)
                     {
+                    if (Player.HasBuff("Judgment") == false)
+                    { 
                         E.Cast();
                     }
+                }
                     if (useQ && minion.IsValidTarget(150) && (Player.GetSpellDamage(minion, SpellSlot.Q)) > minion.Health)
                     {
                         if (Q.Cast())
@@ -329,24 +318,80 @@ namespace Garen_By_Demavex
                     bool useE = Menu["farming"]["usee"].Enabled;
                     float hits = Menu["farming"]["hitq"].As<MenuSlider>().Value;
 
-                    if (useQ && jungleTarget.IsValidTarget(Q.Range) && GameObjects.Jungle.Count(
-                            h => h.IsValidTarget(600, false, false,
-                                jungleTarget.ServerPosition)) >= hits)
+                if (useQ && jungleTarget.IsValidTarget(Q.Range) && GameObjects.Jungle.Count(
+                        h => h.IsValidTarget(300, false, false,
+                            jungleTarget.ServerPosition)) >= hits)
+                {
+                    if (Q.Cast())
                     {
-                        Q.CastOnUnit(jungleTarget);
+                        Orbwalker.ForceTarget(jungleTarget);
+                    }
                     }
                     if (useE && jungleTarget.IsValidTarget(E.Range))
                     {
+                    if (Player.HasBuff("Judgment") == false)
+                    {
                         E.Cast();
                     }
+                }
 
 
                 }
             }
 
 
+        public static Obj_AI_Hero GetBestKillableHero(Spell spell, DamageType damageType = DamageType.True,
+            bool ignoreShields = false)
+        {
+            return TargetSelector.Implementation.GetOrderedTargets(spell.Range).FirstOrDefault(t => t.IsValidTarget());
+        }
 
-            public static Obj_AI_Hero GetBestEnemyHeroTarget()
+
+        private void Killsteal()
+        {
+            if (Q.Ready &&
+                Menu["killsteal"]["ksq"].Enabled)
+            {
+                var bestTarget = GetBestKillableHero(Q, DamageType.Physical, false);
+                if (bestTarget != null &&
+                    Player.GetSpellDamage(bestTarget, SpellSlot.Q) >= bestTarget.Health &&
+                    bestTarget.IsValidTarget(Q.Range))
+                {
+                    if (Q.Cast())
+                    {
+                        Orbwalker.ForceTarget(bestTarget);
+                    }
+                }
+            }
+            if (E.Ready &&
+                Menu["killsteal"]["kse"].Enabled)
+            {
+                var bestTarget = GetBestKillableHero(E, DamageType.Physical, false);
+                if (bestTarget != null &&
+                    Player.GetSpellDamage(bestTarget, SpellSlot.E) >= bestTarget.Health &&
+                    bestTarget.IsValidTarget(E.Range))
+                {
+                    if (Player.HasBuff("Judgment") == false)
+                    {
+                        E.Cast();
+                    }
+                }
+            }
+            if (R.Ready &&
+                Menu["killsteal"]["ksr"].Enabled)
+            {
+                var bestTarget = GetBestKillableHero(R, DamageType.Physical, false);
+                if (bestTarget != null &&
+                    Player.GetSpellDamage(bestTarget, SpellSlot.R) >= bestTarget.Health &&
+                    bestTarget.IsValidTarget(R.Range))
+                {
+                    R.CastOnUnit(bestTarget);
+                }
+            }
+        }
+
+
+        public static Obj_AI_Hero GetBestEnemyHeroTarget()
             {
                 return GetBestEnemyHeroTargetInRange(float.MaxValue);
             }
@@ -388,22 +433,17 @@ namespace Garen_By_Demavex
                     if (Q.Cast())
                     {
                     Orbwalker.ForceTarget(target);
+                    }   
+            }
+                if (useE && target.IsValidTarget(E.Range) && target != null)
+                {
+                    if (Player.HasBuff("Judgment") == false)
+                    {
+                        E.Cast();
                     }
             }
-                if (useE && target.IsValidTarget(325) && target != null)
-                {
-                    E.Cast();
-                }
             
-                if (target.IsValidTarget(400) && target != null)
-                {
-                    if (Player.GetSpellDamage(target, SpellSlot.R) >= target.Health)
-                    {
-                        R.CastOnUnit(target);
-                    }
-                }
-
-                
+                                
         }
 
 
@@ -424,18 +464,21 @@ namespace Garen_By_Demavex
                 {
                     if (target.IsValidTarget(500))
                     {
-                        Q.Cast();
+                    if (Q.Cast())
+                    {
+                        Orbwalker.ForceTarget(target);
                     }
+                }
                 }
                 if (useE && target != null)
                 {
                     if (target.IsValidTarget(E.Range))
                     {
-                    if (!Player.HasBuff("Judgement"))
-                        {
+                    if (Player.HasBuff("Judgment") == false)
+                    {
                         E.Cast();
-                        }
                     }
+                }
                 }
 
             }
