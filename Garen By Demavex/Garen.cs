@@ -124,7 +124,7 @@ namespace Garen_By_Demavex
 
         private static void ZLib_OnPredictDamage(Unit unit, PredictDamageEventArgs args)
         {
-            if (unit.Instance.IsEnemy)
+            if (!unit.Instance.IsMe)
             {
                 return;
             }
@@ -144,7 +144,10 @@ namespace Garen_By_Demavex
             {
                 args.NoProcess = true;
             }
-            if (unit.IncomeDamage > 0)
+
+            var incomingDamagePercent = unit.IncomeDamage / unit.Instance.Health * 100;
+
+            if (unit.IncomeDamage > 0 || incomingDamagePercent >= 50)
             {
                 W.Cast();
             }
