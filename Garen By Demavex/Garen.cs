@@ -327,9 +327,9 @@ namespace Garen_By_Demavex
                         Orbwalker.ForceTarget(jungleTarget);
                     }
                     }
-                    if (useE && jungleTarget.IsValidTarget(E.Range))
+                    if (E.Ready && useE && jungleTarget.IsValidTarget(E.Range))
                     {
-                    if (Player.HasBuff("Judgment") == false)
+                    if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
                     {
                         E.Cast();
                     }
@@ -437,7 +437,7 @@ namespace Garen_By_Demavex
             }
                 if (E.Ready && useE && target.IsValidTarget(E.Range) && target != null)
                 {
-                if (Player.HasBuff("Judgment") == false && Player.HasBuff("Decisive Strike") == false)
+                if ((Player.HasBuff("Judgment") == false) && (Player.HasBuff("Decisive Strike") == false))
                 {
                         E.Cast();
                     }
